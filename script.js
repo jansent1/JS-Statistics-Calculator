@@ -21,11 +21,7 @@ const calculate = () => {
   // Split the value in an array of strings:
   const array = value.split(/,\s*/g);
   // Create a NEW array of numbers based on the string array:
-  const numbers = array
-    .map((el) => {
-      Number(el);
-    })
-    .filter((el) => !isNaN(el)); // Filter out the Not a Number (NaN) input values.
+  const numbers = array.map((el) => Number(el)).filter((el) => !isNaN(el)); // Filter out the Not a Number (NaN) input values.
   // console.log(array);
   const mean = getMean(numbers);
   // Display the value of meaan inside the #mean HTML5 Element:
