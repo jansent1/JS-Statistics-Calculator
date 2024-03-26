@@ -4,7 +4,8 @@
 // Content and Calculation for the first paragraph, MEAN:
 const getMean = (array) =>
   array.reduce((acc, el) => acc + el, 0) / array.length;
-/*{
+/*
+  const getMean = (array) => {
   // Condense the array in a single value (for each el in the array the accumulator((initial value is 0 as second parameter of the callback function)) will be added to the sum variable):
   const sum = array.reduce((acc, el) => {
     return acc + el, 0;
@@ -14,16 +15,26 @@ const getMean = (array) =>
   return mean;
 };*/
 
+// Get Median function:
+const getMedian = (array) => {
+  const sorted = array.sort((a, b) => a - b); // sort the list of numbers from least to greatest:
+  const median =
+    array.length % 2 === 0 // Is the array of even-length? The median should be the average of the two middle indexxes.
+      ? getMean([sorted[array.length / 2], sorted[array.length / 2 - 1]]) //Is even? getMean is called to calculate the average. the 2 sorted method contain the two middel array indexxes.
+      : sorted[Math.floor(array.length / 2)]; // is Odd? The median should be the middle index of the sorted array.
+  return median;
+};
+
 // The calculate function called when the form is submitted:
 const calculate = () => {
-  // find the numbers inside the inputfield:
-  const value = document.querySelector("#numbers").value;
-  // Split the value in an array of strings:
-  const array = value.split(/,\s*/g);
+  const value = document.querySelector("#numbers").value; // find the numbers inside the inputfield
+  const array = value.split(/,\s*/g); // Split the value in an array of strings
   // Create a NEW array of numbers based on the string array:
   const numbers = array.map((el) => Number(el)).filter((el) => !isNaN(el)); // Filter out the Not a Number (NaN) input values.
   // console.log(array);
   const mean = getMean(numbers);
-  // Display the value of meaan inside the #mean HTML5 Element:
+  const median = getMedian(numbers);
+  // Display the value of mean and median inside the HTML5 Element:
   document.querySelector("#mean").textContent = mean;
+  document.querySelector("#median").textContent = median;
 };
