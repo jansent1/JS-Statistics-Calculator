@@ -25,6 +25,22 @@ const getMedian = (array) => {
   return median;
 };
 
+// Get Mode function:
+const getMode = (array) => {
+  const counts = {};
+  array.forEach((el) => {
+    counts[el] = (counts[el] || 0) + 1;
+  });
+  if (new Set(Object.values(counts)).size === 1) {
+    return null;
+  }
+  const highest = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
+  const mode = Object.keys(counts).filter(
+    (el) => counts[el] === counts[highest]
+  );
+  return mode.join(", ");
+};
+
 // The calculate function called when the form is submitted:
 const calculate = () => {
   const value = document.querySelector("#numbers").value; // find the numbers inside the inputfield
@@ -34,7 +50,9 @@ const calculate = () => {
   // console.log(array);
   const mean = getMean(numbers);
   const median = getMedian(numbers);
+  const mode = getMode(numbers);
   // Display the value of mean and median inside the HTML5 Element:
   document.querySelector("#mean").textContent = mean;
   document.querySelector("#median").textContent = median;
+  document.querySelectorAll("#mode").textContent = mode;
 };
