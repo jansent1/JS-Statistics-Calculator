@@ -41,7 +41,35 @@ const getMode = (array) => {
   return mode.join(", ");
 };
 
-// The calculate function called when the form is submitted:
+// get Range function:
+const getRange = (array) => {
+  return Math.max(...array) - Math.min(...array);
+};
+
+// Get Variance function:
+const getVariance = (array) => {
+  const mean = getMean(array);
+  const variance =
+    array.reduce((acc, el) => {
+      const difference = el - mean;
+      const squared = difference ** 2;
+      return acc + squared;
+    }, 0) / array.length;
+  return variance;
+};
+
+/* Redundant Variance function's content:
+  const differences = array.map((el) => el - mean);
+  const squaredDifferences = differences.map((el) => el ** 2);
+  */
+
+// Get Standard Deviation function: (This is the square root of the variance)
+const getStandardDeviation = (array) => {
+  const variance = getVariance(array);
+  const standardDeviation = Math.pow(variance, 1 / 2);
+};
+
+// The calculate function is called when the form is submitted:
 const calculate = () => {
   const value = document.querySelector("#numbers").value; // find the numbers inside the inputfield
   const array = value.split(/,\s*/g); // Split the value in an array of strings
@@ -51,8 +79,12 @@ const calculate = () => {
   const mean = getMean(numbers);
   const median = getMedian(numbers);
   const mode = getMode(numbers);
+  const range = getRange(numbers);
+  const variance = getVariance(numbers);
   // Display the value of mean and median inside the HTML5 Element:
   document.querySelector("#mean").textContent = mean;
   document.querySelector("#median").textContent = median;
   document.querySelectorAll("#mode").textContent = mode;
+  document.querySelectorAll("#range").textContent = range;
+  document.querySelector("#variance").textContent = variance;
 };
