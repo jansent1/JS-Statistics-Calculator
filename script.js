@@ -17,7 +17,7 @@ const getMean = (array) =>
 
 // Get Median function:
 const getMedian = (array) => {
-  const sorted = array.sort((a, b) => a - b); // sort the list of numbers from least to greatest:
+  const sorted = array.slice().sort((a, b) => a - b); // sort the list of numbers from least to greatest. The slice method creates an empty shallow array to do so.
   const median =
     array.length % 2 === 0 // Is the array of even-length? The median should be the average of the two middle indexxes.
       ? getMean([sorted[array.length / 2], sorted[array.length / 2 - 1]]) //Is even? getMean is called to calculate the average. the 2 sorted method contain the two middel array indexxes.
@@ -66,7 +66,9 @@ const getVariance = (array) => {
 // Get Standard Deviation function: (This is the square root of the variance)
 const getStandardDeviation = (array) => {
   const variance = getVariance(array);
-  const standardDeviation = Math.pow(variance, 1 / 2);
+  //const standardDeviation = Math.pow(variance, 1 / 2);
+  const standardDeviation = Math.sqrt(variance);
+  return standardDeviation;
 };
 
 // The calculate function is called when the form is submitted:
@@ -81,10 +83,12 @@ const calculate = () => {
   const mode = getMode(numbers);
   const range = getRange(numbers);
   const variance = getVariance(numbers);
+  const standardDeviation = getStandardDeviation(numbers);
   // Display the value of mean and median inside the HTML5 Element:
   document.querySelector("#mean").textContent = mean;
   document.querySelector("#median").textContent = median;
   document.querySelectorAll("#mode").textContent = mode;
   document.querySelectorAll("#range").textContent = range;
   document.querySelector("#variance").textContent = variance;
+  document.querySelector("#standardDeviation").textContent = standardDeviation;
 };
